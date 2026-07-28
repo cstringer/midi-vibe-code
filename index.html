@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generative Scale Synth</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1>Generative Scale Synth</h1>
+      <p class="subtitle">
+        Generates 4 sine oscillators from selectable scales across multiple
+        octaves, with optional auto-root motion and a resonant low-pass filter.
+      </p>
+
+      <section class="controls">
+        <div class="controlGroup controlGroupSelect">
+          <label for="rootNote">Root note</label>
+          <select id="rootNote" aria-label="Concert key root note">
+            <option value="C">C</option>
+            <option value="C#">C# / Db</option>
+            <option value="D">D</option>
+            <option value="D#">D# / Eb</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="F#">F# / Gb</option>
+            <option value="G">G</option>
+            <option value="G#">G# / Ab</option>
+            <option value="A" selected>A</option>
+            <option value="A#">A# / Bb</option>
+            <option value="B">B</option>
+          </select>
+        </div>
+
+        <div class="controlGroup controlGroupSelect">
+          <label for="scaleSelect">Scale/Chord</label>
+          <select id="scaleSelect" aria-label="Scale selection">
+            <option value="majorPentatonic" selected>Major Pentatonic</option>
+            <option value="wholeTone">Whole Tone</option>
+            <option value="minorPentatonic">Minor Pentatonic</option>
+            <option value="diminished">Diminished</option>
+            <option value="quartalTone">Quartal Tone</option>
+            <option value="majorTriad">Major Triad</option>
+            <option value="minorTriad">Minor Triad</option>
+            <option value="diminishedTriad">Diminished Triad</option>
+            <option value="augmentedTriad">Augmented Triad</option>
+            <option value="majorSeventh">Major Seventh</option>
+            <option value="minorSeventh">Minor Seventh</option>
+            <option value="dominantSeventh">Dominant Seventh</option>
+            <option value="minorSevenFlatFive">Minor Seven Flat Five</option>
+            <option value="majorSevenSharpEleven">Major Seven Sharp 11</option>
+          </select>
+        </div>
+
+        <div class="controlGroup controlGroupRange">
+          <label for="tempoSlider">Tempo: <span id="tempoValue">120</span> BPM</label>
+          <input
+            id="tempoSlider"
+            type="range"
+            min="40"
+            max="400"
+            value="120"
+            step="1"
+            aria-label="Tempo in beats per minute"
+          />
+        </div>
+
+        <div class="controlGroup controlGroupRange">
+          <label for="filterCutoffSlider">
+            Low-pass cutoff: <span id="filterCutoffValue">1800</span> Hz
+          </label>
+          <input
+            id="filterCutoffSlider"
+            type="range"
+            min="80"
+            max="12000"
+            value="1800"
+            step="1"
+            aria-label="Low-pass filter cutoff frequency in hertz"
+          />
+        </div>
+
+        <div class="controlGroup controlGroupRange">
+          <label for="filterResonanceSlider">
+            Resonance (Q): <span id="filterResonanceValue">1.2</span>
+          </label>
+          <input
+            id="filterResonanceSlider"
+            type="range"
+            min="0.1"
+            max="20"
+            value="1.2"
+            step="0.1"
+            aria-label="Low-pass filter resonance"
+          />
+        </div>
+
+        <div class="controlGroup controlGroupRange">
+          <label for="masterGainSlider">
+            Master gain: <span id="masterGainValue">0.90</span>
+          </label>
+          <input
+            id="masterGainSlider"
+            type="range"
+            min="0"
+            max="1"
+            value="0.9"
+            step="0.01"
+            aria-label="Master output gain"
+          />
+        </div>
+
+        <div class="controlRow">
+          <div class="toggleGroup">
+            <label class="checkboxControl" for="autoRootOverride">
+              <input
+                id="autoRootOverride"
+                type="checkbox"
+                aria-label="Automatically override root note from a playing oscillator"
+              />
+              Auto-root: periodically follow a random playing oscillator
+            </label>
+
+            <label class="checkboxControl" for="autoScaleRandomize">
+              <input
+                id="autoScaleRandomize"
+                type="checkbox"
+                aria-label="Automatically randomize the selected scale"
+              />
+              Auto-scale: switch to a random scale on random beats
+            </label>
+          </div>
+
+          <button id="toggleAudio" type="button">Start</button>
+        </div>
+      </section>
+
+      <section class="status" aria-live="polite">
+        <h2>Current oscillator frequencies</h2>
+        <ul id="freqList">
+          <li>Not running</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
